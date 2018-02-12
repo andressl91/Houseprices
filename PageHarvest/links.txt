@@ -1,0 +1,3 @@
+https://beta.api.met.no/
+data.met.no
+https://data.met.no/reference
