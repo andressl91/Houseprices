@@ -16,6 +16,8 @@ data = []
 # All realestates on one page
 all_realestate_boxes = soup.find_all("div", class_="unit flex align-items-stretch result-item")
 
+#TODO: Consider Object programming of a site with attributes adress, finn_id... in constructor f.eks
+#TODO: Consider aggreate methods, to aggregate all realastate according to some option, f.eks price range or sq_m > 50 ..
 
 for i in all_realestate_boxes:
     #Adresses
