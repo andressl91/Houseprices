@@ -11,18 +11,10 @@ from queue import Queue
 from threading import Event, Thread
 from time import sleep
 
-# noinspection PyUnresolvedReferences
-from shyft.api import (
-    DtsServer, DtsClient,
-    TsVector, TimeSeries,
-    Calendar, UtcPeriod, utctime_now
-)
 
 # from statkraft.data_collection.collectors.activity import ActivityABC  # not needed as we cannot type Queue
-from statkraft.ltm.application.input.utilities.inflow_forecast_activity import InflowForecastActivity
-from statkraft.ltm.application.input.utilities.reservoir_mag_activity import ReservoirActivity
-from statkraft.ltm.application.input.utilities.station_prod_activity import StationActivity
-from statkraft.ltm.application.input.utilities.own_filling_activity import OwnFillingActivity
+ from . import FinnActivity
+
 CollectorTuple = namedtuple('CollectorTuple', ['collector', 'thread', 'activity', 'args'])
 
 
@@ -33,10 +25,7 @@ class CollectorError(RuntimeError):
 
 class Collectors(Enum):
     """Enumeration of known collector instances."""
-    INFLOW_FORECAST = InflowForecastActivity
-    RESERVOIR_MAGVOLUME = ReservoirActivity
-    STATION_PRODUCTION = StationActivity
-    RES_FILLING = OwnFillingActivity
+    FINN_REALESTATE = FinnActivity
 
 class CollectorManager:
     """Manager for controlling collector activities.
