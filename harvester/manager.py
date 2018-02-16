@@ -12,8 +12,7 @@ from threading import Event, Thread
 from time import sleep
 
 
-# from statkraft.data_collection.collectors.activity import ActivityABC  # not needed as we cannot type Queue
- from . import FinnActivity
+from .finn_activity import FinnActivity
 
 CollectorTuple = namedtuple('CollectorTuple', ['collector', 'thread', 'activity', 'args'])
 
