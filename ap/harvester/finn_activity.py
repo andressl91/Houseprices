@@ -87,9 +87,6 @@ class FinnActivity(ActivityABC):
         # All realestates on one page
         all_realestate_boxes = soup.find_all("div", class_="unit flex align-items-stretch result-item")
 
-        # TODO: Consider Object programming of a site with attributes adress, finn_id... in constructor f.eks
-        # TODO: Consider aggreate methods, to aggregate all realastate according to some option, f.eks price range or sq_m > 50 ..
-
         for i in all_realestate_boxes:
             # Adresses
             address = i.find("div", class_="licorice valign-middle").string
@@ -114,3 +111,7 @@ if __name__ == "__main__":
     activity = FinnActivity(wait_first=False, wakeup_freq=5,
                             exit_event=None, logger=logging.getLogger("Reservoir"))
     activity.action()
+
+    # TODO: Store data outside project
+    # TODO: Clean m² out of storage in DB
+    # TODO: Move RealEstate out of sqlwork.py, and OOP in individual .py

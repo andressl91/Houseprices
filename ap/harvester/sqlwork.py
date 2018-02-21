@@ -21,6 +21,9 @@ class SqlLiteClient:
         self.db_path = db_path
 
     def create_table(self):
+        #TODO: Conditional, check if Realestate db exists, else create
+        # If flag, then create
+        #TODO: Make sure instance only created once for each activity
         try:
             sql_db = sqlite3.connect(self.db_path)
             cursor = sql_db.cursor()
