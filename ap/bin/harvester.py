@@ -1,8 +1,9 @@
 import logging
 
-from harvester.manager import CollectorManager
-from harvester.manager import Collectors
 
+from ap.harvester.manager2 import CollectorManager
+from ap.harvester.manager2 import Collectors
+from ap.harvester.log_handler import log_handler
 
 
 def mirror_smg(log_path: str = ''):
@@ -19,7 +20,7 @@ def mirror_smg(log_path: str = ''):
 
     """
     cm = CollectorManager(
-        monitor_poll_freq=10.,
+        monitor_poll_freq=8.,
         logger=None,
         default_wait_first=False,
         default_wakeup_freq=None,
@@ -37,7 +38,7 @@ def mirror_smg(log_path: str = ''):
         cm.start()
         log_handler(cm, log_path)
         while True:
-            cm.block_on_monitor(timeout=60)
+            cm.block_on_monitor(timeout=10)
     finally:
         if cm.is_running():
             cm.exit()

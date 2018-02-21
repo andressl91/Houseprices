@@ -3,6 +3,7 @@ import urllib.request
 import csv
 from datetime import datetime
 
+from ap.harvester.harvester import ActivityABC
 
 def get_soup():                                                
     with urllib.request.urlopen('https://www.finn.no/realestate/homes/search.html?location=0.20003') as html_code: 

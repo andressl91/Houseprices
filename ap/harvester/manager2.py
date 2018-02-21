@@ -12,7 +12,7 @@ from threading import Event, Thread
 from time import sleep
 
 
-from .finn_activity import FinnActivity
+from ap.harvester.finn_activity import FinnActivity
 
 CollectorTuple = namedtuple('CollectorTuple', ['collector', 'thread', 'activity', 'args'])
 
@@ -81,8 +81,8 @@ class CollectorManager:
         # manager and monitor state
         self._exit_event = Event()
         self._monitor_poll_freq = monitor_poll_freq
-        self._monitor: Union[CollectorMonitor, None] = None
-        self._monitor_thread: Union[Thread, None] = None
+        self._monitor = None
+        self._monitor_thread = None
 
     def get_logger(self) -> logging.Logger:
         """Return the logger used by the manager."""
