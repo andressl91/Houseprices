@@ -70,7 +70,10 @@ if __name__ == "__main__":
     prospect = RealEstate(finn_id='123', address='home2', sq_meters='44', price='1234')
 
     sql_client = SqlLiteClient(db_path=db_path)
-    sql_client.persist_realestate(prospect)
+    # RUN THIS TO MAKE REALESTATE DB
+    #sql_client.create_table()
+
+    #sql_client.persist_realestate(prospect)
 
 
     """

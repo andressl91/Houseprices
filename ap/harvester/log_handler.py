@@ -2,7 +2,7 @@ import os
 import logging
 
 from logging.handlers import TimedRotatingFileHandler
-from ap.harvester.manager2 import CollectorManager
+from ap.harvester.manager import CollectorManager
 
 
 class ActivityFilter(logging.Filter):
