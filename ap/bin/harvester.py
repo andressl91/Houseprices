@@ -1,8 +1,8 @@
 import logging
 
 
-from ap.harvester.manager2 import CollectorManager
-from ap.harvester.manager2 import Collectors
+from ap.harvester.manager import CollectorManager
+from ap.harvester.manager import Collectors
 from ap.harvester.log_handler import log_handler
 
 

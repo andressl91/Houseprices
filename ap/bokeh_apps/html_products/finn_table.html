@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Bokeh Plot</title>
+        
+<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.13.min.css" type="text/css" />
+        
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.js"></script>
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.13.min.js"></script>
+<script type="text/javascript">
+    Bokeh.set_log_level("info");
+</script>
+        <style>
+          html {
+            width: 100%;
+            height: 100%;
+          }
+          body {
+            width: 90%;
+            height: 100%;
+            margin: auto;
+          }
+        </style>
+    </head>
+    <body>
+        
+        <div class="bk-root">
+            <div class="bk-plotdiv" id="21b114b8-7032-437c-909e-a8bfd2d530b8"></div>
+        </div>
+        
+        <script type="application/json" id="3f264cc1-ae1d-4031-86ab-741eae4cec41">
+          {"6dc38ad8-62e0-4469-9923-0a2736c68d19":{"roots":{"references":[{"attributes":{},"id":"fb65d32a-c8a1-4089-90ad-c2976816319b","type":"StringFormatter"},{"attributes":{},"id":"abaddbd6-f106-4c81-8612-3eb9a0897377","type":"StringEditor"},{"attributes":{"editor":{"id":"187d684f-526b-4cdc-97c8-28a54753a64a","type":"StringEditor"},"field":"sq_meters","formatter":{"id":"cbf209f3-97c4-405b-972e-6cca74571644","type":"StringFormatter"},"title":"SqMeter"},"id":"5b2e1be7-835c-4c19-8260-f1a3f36d8e71","type":"TableColumn"},{"attributes":{},"id":"3e49c17a-7a6c-4177-bb31-91617bfb31a8","type":"StringFormatter"},{"attributes":{"editor":{"id":"200546c2-5444-479a-b3ef-ba3fdd04be12","type":"StringEditor"},"field":"address","formatter":{"id":"c7dae531-42ef-467e-8f81-61474ebe78b6","type":"StringFormatter"},"title":"Address"},"id":"b4634d78-e4d1-427e-95df-230ac0d1bdb1","type":"TableColumn"},{"attributes":{},"id":"cbf209f3-97c4-405b-972e-6cca74571644","type":"StringFormatter"},{"attributes":{},"id":"187d684f-526b-4cdc-97c8-28a54753a64a","type":"StringEditor"},{"attributes":{"editor":{"id":"c9201c90-6e0f-43f1-bad2-b641225cecef","type":"StringEditor"},"field":"finn_id","formatter":{"id":"fb65d32a-c8a1-4089-90ad-c2976816319b","type":"StringFormatter"},"title":"FinnId"},"id":"279a4420-61f1-40c7-81c6-62de6e018085","type":"TableColumn"},{"attributes":{"columns":[{"id":"786ad856-577b-495c-ab30-b860ced7bd6a","type":"TableColumn"},{"id":"5b2e1be7-835c-4c19-8260-f1a3f36d8e71","type":"TableColumn"},{"id":"b4634d78-e4d1-427e-95df-230ac0d1bdb1","type":"TableColumn"},{"id":"279a4420-61f1-40c7-81c6-62de6e018085","type":"TableColumn"}],"height":280,"selectable":true,"source":{"id":"db9a8ad5-9432-477d-8724-6cbb2ac8716d","type":"ColumnDataSource"},"view":{"id":"b861a95e-70ff-4b5b-9ca5-af9ef4b56c8e","type":"CDSView"},"width":400},"id":"65388f86-3521-4749-a4ad-88c7720a0ae3","type":"DataTable"},{"attributes":{},"id":"c9201c90-6e0f-43f1-bad2-b641225cecef","type":"StringEditor"},{"attributes":{"source":{"id":"db9a8ad5-9432-477d-8724-6cbb2ac8716d","type":"ColumnDataSource"}},"id":"b861a95e-70ff-4b5b-9ca5-af9ef4b56c8e","type":"CDSView"},{"attributes":{},"id":"200546c2-5444-479a-b3ef-ba3fdd04be12","type":"StringEditor"},{"attributes":{"callback":null,"column_names":["prices","sq_meters","address","finn_id"],"data":{"address":["Skysetveien 5 E, Hagan","Heggeveien 8 B, Hagan","John Strandruds vei 11, Lysaker","Hektnerhagan 96, Fjerdingby","Dueveien 10, Dr\u00f8bak","Belsj\u00f8parken 6, Dr\u00f8bak","Bokfinkvegen 38, Maura","S\u00f8r\u00e5sveien 56, \u00c5s","Borgveien 6 A, H\u00f8vik","Sk\u00e5rerveien 12, L\u00f8renskog","Sk\u00e5rerveien 14, L\u00f8renskog","Kilenveien 16, Lysaker","Alexander Kiellands gate 18 F, Lillestr\u00f8m","Faldalsveien 26, Fetsund","Sk\u00e5rerveien 14, B401, L\u00f8renskog","Sm\u00e5ttaveien 3 A, Flateby","Prost Stabels vei 183, Skedsmokorset","Sarbuvollveien 59, H\u00f8vik","Kirkegata 1, Lillestr\u00f8m","Hamang Terrasse 83, Sandvika","Vevelstad\u00e5sen 24, Langhus","Stang\u00e5sveien 14 A, Oppeg\u00e5rd","Holtveien 10, Kjeller","Teietunet 6, Gjerdrum","S\u00f8ster Mathildes gate 28, Rasta","L\u00e5veveien 21c, Aurskog","Hakadal","Jernbaneveien 45, Stabekk","Gamle Lommedalsvei 123, Rykkinn","Jernbaneveien 123, Stabekk","Statsr\u00e5dtunet 3b, Eidsvoll Verk","Hagajordet 7, Bj\u00f8rkelangen","Grevlingstien 7, Gjerdrum","T\u00e5rnveien 2 b, Oppeg\u00e5rd","Sole All\u00e8 53, Vestby","Fetsund brygge 3, Fetsund","Br\u00e5n\u00e5slia 1 A, Skedsmokorset","L\u00f8kkedalsbakken 7, Dr\u00f8bak","HARALD H\u00c5RFAGRES VEI 21, Sofiemyr","John Strandruds vei 5, Lysaker","Tverrvegen 1, S\u00f8rumsand","Markveien 11 B, Ski","Tamburbakken 7a, Dr\u00f8bak","Doktor Wendts gate 6, Rasta","Ankerveien 214, Eiksmarka","Ulvefaret 29, Blystadlia","Skolsegglia 47, Skedsmokorset"],"finn_id":["114682410","114918787","114879387","114885287","114895969","114892965","114912086","114900804","114893365","107677153","113837491","104422610","112451250","113518135","114236182","114887618","111376456","114887221","113180134","114884560","114878620","114684645","108171338","111013468","112458042","114881049","88560961","114880807","77962792","114878191","114876537","114707623","114874576","111405574","103410063","113698758","114859088","114871419","105358765","114868945","114868026","104351190","114867297","114866540","114866384","114637673","111959773"],"prices":["2\u00a0850\u00a0000,-","2\u00a0290\u00a0000,-","6\u00a0490\u00a0000,-","4\u00a0900\u00a0000,-","6\u00a0300\u00a0000,-","7\u00a0500\u00a0000,-","1\u00a0800\u00a0000,-","6\u00a0250\u00a0000,-","5\u00a0390\u00a0000,-","5\u00a0950\u00a0000,-","6\u00a0690\u00a0000,-","5\u00a0490\u00a0000,-","2\u00a0790\u00a0000,-","4\u00a0590\u00a0000,-","5\u00a0600\u00a0000,-","3\u00a0400\u00a0000,-","3\u00a0100\u00a0000,-","8\u00a0000\u00a0000,-","3\u00a0580\u00a0000,-","3\u00a0500\u00a0000,-","3\u00a0300\u00a0000,-","6\u00a0300\u00a0000,-","4\u00a0170\u00a0000,-","3\u00a0650\u00a0000,-","4\u00a0290\u00a0000,-","2\u00a0200\u00a0000,-","3\u00a0198\u00a0000 - 4\u00a0198\u00a0000,-","9\u00a0250\u00a0000,-","4\u00a0098\u00a0000 - 6\u00a0528\u00a0000,-","10\u00a0500\u00a0000,-","2\u00a0990\u00a0000,-","3\u00a0400\u00a0000,-","4\u00a0650\u00a0000,-","7\u00a0450\u00a0000,-","4\u00a0900\u00a0000,-","2\u00a0550\u00a0000,-","2\u00a0800\u00a0000,-","25\u00a0000\u00a0000,-","2\u00a0850\u00a0000,-","3\u00a0200\u00a0000,-","2\u00a0600\u00a0000,-","4\u00a0200\u00a0000,-","2\u00a0750\u00a0000,-","2\u00a0200\u00a0000,-","8\u00a0200\u00a0000,-","4\u00a0100\u00a0000,-","6\u00a0495\u00a0000,-"],"sq_meters":["89 m\u00b2","53 m\u00b2","80 m\u00b2","104 m\u00b2","183 m\u00b2","187 m\u00b2","105 m\u00b2","136 m\u00b2","103 m\u00b2","97 m\u00b2","82 m\u00b2","64 m\u00b2","51 m\u00b2","81 m\u00b2","83 m\u00b2","132 m\u00b2","78 m\u00b2","121 m\u00b2","58 m\u00b2","73 m\u00b2","93 m\u00b2","152 m\u00b2","124 m\u00b2","107 m\u00b2","87 m\u00b2","63 m\u00b2","67 - 107 m\u00b2","181 m\u00b2","66 - 124 m\u00b2","145 m\u00b2","72 m\u00b2","180 m\u00b2","190 m\u00b2","151 m\u00b2","100 m\u00b2","54 m\u00b2","55 m\u00b2","234 m\u00b2","74 m\u00b2","41 m\u00b2","48 m\u00b2","134 m\u00b2","45 m\u00b2","33 m\u00b2","142 m\u00b2","114 m\u00b2","200 m\u00b2"]}},"id":"db9a8ad5-9432-477d-8724-6cbb2ac8716d","type":"ColumnDataSource"},{"attributes":{},"id":"c7dae531-42ef-467e-8f81-61474ebe78b6","type":"StringFormatter"},{"attributes":{"editor":{"id":"abaddbd6-f106-4c81-8612-3eb9a0897377","type":"StringEditor"},"field":"prices","formatter":{"id":"3e49c17a-7a6c-4177-bb31-91617bfb31a8","type":"StringFormatter"},"title":"Price"},"id":"786ad856-577b-495c-ab30-b860ced7bd6a","type":"TableColumn"}],"root_ids":["65388f86-3521-4749-a4ad-88c7720a0ae3"]},"title":"Bokeh Application","version":"0.12.13"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('3f264cc1-ae1d-4031-86ab-741eae4cec41').textContent;
+                  var render_items = [{"docid":"6dc38ad8-62e0-4469-9923-0a2736c68d19","elementid":"21b114b8-7032-437c-909e-a8bfd2d530b8","modelid":"65388f86-3521-4749-a4ad-88c7720a0ae3"}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        embed_document(root);
+                        clearInterval(timer);
+                      }
+                      attempts++;
+                      if (attempts > 100) {
+                        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+                        clearInterval(timer);
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    </body>
+</html>

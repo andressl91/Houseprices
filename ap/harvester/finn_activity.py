@@ -1,7 +1,9 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, element
 import urllib.request
 import csv
 import os
+
+from sqlite3 import IntegrityError
 
 from typing import Optional
 from abc import abstractmethod
@@ -10,9 +12,10 @@ from numpy import isnan
 import logging
 
 from ap.harvester.sqlwork import RealEstate, SqlLiteClient
-
-
 from ap.harvester.harvester import ActivityABC
+
+class NotValidSqM(Exception):
+    pass
 
 class FinnActivity(ActivityABC):
     """Mirrors reservoir volumehistory from smg-database to shyft-container.
@@ -80,6 +83,16 @@ class FinnActivity(ActivityABC):
     def persist_realestate(self, prospect: RealEstate):
         self.sql_client().persist_realestate(prospect)
 
+    def get_address(self, addr: element.Tag):
+        return addr.find("div", class_="licorice valign-middle").string
+
+    def get_sq_m(self, sq_m: element.Tag):
+        sq_m = sq_m.find("p", {"class": "t5 word-break mhn"}).get_text().split('\n')[1]
+        return sq_m.split('m')[0]
+
+    def get_price_nok(self, price_nok: element.Tag):
+        price_nok = price_nok.find("p", {"class": "t5 word-break mhn"}).get_text().split('\n')[2]
+        return price_nok.split(',')[0].replace(' ', '')
 
     def action(self):
         soup = self.get_soup()
@@ -87,22 +100,41 @@ class FinnActivity(ActivityABC):
         # All realestates on one page
         all_realestate_boxes = soup.find_all("div", class_="unit flex align-items-stretch result-item")
 
+
+
         for i in all_realestate_boxes:
-            # Adresses
-            address = i.find("div", class_="licorice valign-middle").string
-            finn_id = i.find("a")['id']
-            sq_m = i.find("p", {"class": "t5 word-break mhn"}).get_text().split('\n')[1]
-            price_nok = i.find("p", {"class": "t5 word-break mhn"}).get_text().split('\n')[2]
-            print("Description: \n%s" % i.find("h3").string)
+            try:
+                # Adresses
+                finn_id = i.find("a")['id']
+                address = self.get_address(i)
+                sq_m = self.get_sq_m(i)
+
+                if "-" in sq_m:
+                    continue
+
+                price_nok = self.get_price_nok(i)
+                if "-" in price_nok:
+                    # Range of sq_m ex. 45 - 60, 4-6Mill indicates to general Realestate
+                    continue
+
+                price_nok = price_nok.replace('\xa0', '')
+                price_pr_sqm = "%.0f" % (float(price_nok)/int(sq_m))
+                #print("Description: \n%s" % i.find("h3").string)
+
+            except:
+                pass
+
 
             print("Done one realestate unit \n")
-            data.append((finn_id, address, sq_m, price_nok))
+            data.append((finn_id, address, sq_m, price_nok, price_pr_sqm))
+
 
         folder = os.path.dirname(__file__)
         p = os.path.join(folder, 'data', 'index.csv')
 
-        for finn_id, address, sq_m, price_nok in data:
-            prospect = RealEstate(finn_id=finn_id, address=address, sq_meters=sq_m, price=price_nok)
+
+        for finn_id, address, sq_m, price_nok, price_pr_sqm in data:
+            prospect = RealEstate(finn_id=finn_id, address=address, sq_meters=sq_m, price=price_nok, price_pr_sqm=price_pr_sqm)
             self.persist_realestate(prospect)
 
 
