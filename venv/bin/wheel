@@ -1,4 +1,4 @@
-#!/home/andreas/Desktop/Houseprices/venv/bin/python3.5
+#!/home/andreas/Desktop/Houseprices/venv/bin/python3.6
 
 # -*- coding: utf-8 -*-
 import re
