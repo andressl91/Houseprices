@@ -13,7 +13,7 @@ import logging
 
 from ap.harvester.sqlwork import RealEstate, SqlLiteClient
 from ap.harvester.harvester import ActivityABC
-from ap.utilities.sql_interface import SqlTsDb
+from ap.utilities.sql_interface import SqlTsDb, SqlTable
 
 class NotValidSqM(Exception):
     pass
@@ -53,6 +53,7 @@ class FinnActivity(ActivityABC):
 
         self.module_map = None
         self.sql_db = None
+        self.sql_table = None
 
     @property
     def name(self) -> str:
@@ -61,10 +62,13 @@ class FinnActivity(ActivityABC):
     def startup(self) -> None:
         """Perform needed startup actions before the activity polling loop."""
         path_to_folder = os.path.dirname(__file__)
-        db_path = os.path.join(path_to_folder, 'data', 'finn_ids.db')
+        db_path = os.path.join(path_to_folder, 'data', 'finn.db')
+        table_path = os.path.join(path_to_folder, 'data', 'finn_table.db')
 
         self.sql_db = SqlTsDb(db_path=db_path, category="price", sql_type="INT")
-
+        self.sql_table = SqlTable(db_path=table_path)
+        categories = {"price": "INT", "sq_m": "INT"}
+        self.sql_table.create_table(table_name="finn_info", categories=categories)
 
     def cleanup(self, started: bool, graceful: bool) -> None:
         """Perform needed cleanup actions when thread performing activity polling exits."""
@@ -131,8 +135,10 @@ class FinnActivity(ActivityABC):
 
             #except:
 
-
-
+            # ORDER OF DICT DOESNT MATTER !
+            # CONSIDER ENUM TO FIX CATEGORIES
+            data_set = {"sq_m": int(sq_m) } #"price": int(price_nok)
+            self.sql_table.write_to_table(data_set)
             #print("Done one realestate unit \n")
             data.append((finn_id, address, sq_m, price_nok, price_pr_sqm))
 
