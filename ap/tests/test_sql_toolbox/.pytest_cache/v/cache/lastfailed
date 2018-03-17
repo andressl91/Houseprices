@@ -1,0 +1,4 @@
+{
+  "test_sql_i.py": true,
+  "test_sql_i.py::test_make_realestate_table": true
+}

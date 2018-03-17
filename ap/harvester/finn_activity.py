@@ -1,19 +1,15 @@
 from bs4 import BeautifulSoup, element
 import urllib.request
-import csv
 import os
 import time
-from sqlite3 import IntegrityError
 
 from typing import Optional
-from abc import abstractmethod
 from threading import Event
-from numpy import isnan
 import logging
 
-from ap.harvester.sqlwork import RealEstate, SqlLiteClient
+from ap.harvester.sqlwork import RealEstate
 from ap.harvester.harvester import ActivityABC
-from ap.utilities.sql_interface import SqlTsDb, SqlTable
+from ap.sql_toolbox.sql_interface import SqlTsDb, SqlTable
 
 class NotValidSqM(Exception):
     pass
@@ -52,7 +48,7 @@ class FinnActivity(ActivityABC):
         self.module_map = None
 
         self.module_map = None
-        self.sql_db = None
+        self.sql_ts_db = None
         self.sql_table = None
 
     @property
@@ -62,12 +58,12 @@ class FinnActivity(ActivityABC):
     def startup(self) -> None:
         """Perform needed startup actions before the activity polling loop."""
         path_to_folder = os.path.dirname(__file__)
-        db_path = os.path.join(path_to_folder, 'data', 'finn.db')
+        db_path = os.path.join(path_to_folder, 'data', 'finn_ts.db')
         table_path = os.path.join(path_to_folder, 'data', 'finn_table.db')
 
-        self.sql_db = SqlTsDb(db_path=db_path, category="price", sql_type="INT")
+        self.sql_ts_db = SqlTsDb(db_path=db_path, category="price", sql_type="INT")
         self.sql_table = SqlTable(db_path=table_path)
-        categories = {"price": "INT", "sq_m": "INT"}
+        categories = {"finn_id": "INT", "address": "VARCHAR(30)", "price": "INT", "sq_m": "INT"}
         self.sql_table.create_table(table_name="finn_info", categories=categories)
 
     def cleanup(self, started: bool, graceful: bool) -> None:
@@ -103,7 +99,7 @@ class FinnActivity(ActivityABC):
         price_nok = price_nok.find("p", {"class": "t5 word-break mhn"}).get_text().split('\n')[2]
         return price_nok.split(',')[0].replace(' ', '')
 
-    def action(self):
+    def soup_alchemy(self):
         t1 = time.time()
         soup = self.get_soup()
         print(f"Get soup took {time.time() - t1}")
@@ -113,9 +109,9 @@ class FinnActivity(ActivityABC):
 
         # TODO: asyncio for I/O
         # TODO: get logging up
+        data = []
         for i in all_realestate_boxes:
-            #try:
-            # Adresses
+
             finn_id = i.find("a")['id']
             address = self.get_address(i)
             sq_m = self.get_sq_m(i)
@@ -129,28 +125,31 @@ class FinnActivity(ActivityABC):
                 continue
 
             price_nok = price_nok.replace('\xa0', '')
-            price_pr_sqm = "%.0f" % (float(price_nok)/int(sq_m))
-            #print("Description: \n%s" % i.find("h3").string)
-            self.sql_db.send_data(table_name=self.table_name_template(finn_id), data_value=price_nok)
-
-            #except:
-
-            # ORDER OF DICT DOESNT MATTER !
-            # CONSIDER ENUM TO FIX CATEGORIES
-            data_set = {"sq_m": int(sq_m) } #"price": int(price_nok)
-            self.sql_table.write_to_table(data_set)
-            #print("Done one realestate unit \n")
-            data.append((finn_id, address, sq_m, price_nok, price_pr_sqm))
+            price_pr_sqm = "%.0f" % (float(price_nok) / int(sq_m))
+            # print("Description: \n%s" % i.find("h3").string)
+            data_realestate = {"finn_id": int(finn_id),
+                        "address": address,
+                        "price": int(price_nok),
+                        "sq_m": int(sq_m)}
+            data.append(data_realestate)
 
 
-        folder = os.path.dirname(__file__)
-        p = os.path.join(folder, 'data', 'index.csv')
+        return data
 
+    def action(self):
 
-        #for finn_id, address, sq_m, price_nok, price_pr_sqm in data:
-        #    prospect = RealEstate(finn_id=finn_id, address=address, sq_meters=sq_m, price=price_nok, price_pr_sqm=price_pr_sqm)
-        #    self.persist_realestate(prospect)
+            #self.sql_db.send_data(table_name=self.table_name_template(finn_id), data_value=price_nok)
+            data_set = self.soup_alchemy()
+            for data in data_set:
+                self.sql_table.write_to_table(data)
+                self.sql_ts_db.send_data(table_name="Finn_" + str(data["finn_id"]),
+                                         data_value=data["price"])
 
+            #JUST TO TEST WRITE CSV
+            path_to_csv = os.path.dirname(__file__)
+            path_to_csv = os.path.join(path_to_csv, 'data', 'finn_ts.csv')
+
+            self.sql_table.write_to_csv(path=path_to_csv,table=self.sql_table.table_name)
 
 if __name__ == "__main__":
 

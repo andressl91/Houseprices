@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Importing the dataset
-dataset = pd.read_csv('Salary_Data.csv')
-X = dataset.iloc[:, :-1].values
-y = dataset.iloc[:, 1].values
+dataset = pd.read_csv('/home/andreas/Desktop/Houseprices/ap/foresight/data/finn_table.csv')
+X = dataset.iloc[:, 1].values
+y = dataset.iloc[:, 2].values
 
 # Splitting the dataset into the Training set and Test set
 from sklearn.cross_validation import train_test_split

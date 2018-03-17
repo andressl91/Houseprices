@@ -11,7 +11,7 @@ def lazy_sqlite_db_fetch():
     cursor = db_con.cursor()
     ##cursor.execute("SELECT * FROM finn_info;")
 
-    cursor.execute("PRAGMA table_info(finn_info)")
+    cursor.execute("PRAGMA table_info(realestate)")
 
     ##print()
 
@@ -24,7 +24,7 @@ def lazy_sqlite_db_fetch():
         cursor = db_con.cursor()
         write_file.write(colum_headers.encode())
         write_file.write("\n".encode())
-        for row in cursor.execute("SELECT * FROM finn_info"):
+        for row in cursor.execute("SELECT * FROM realestate"):
             writeRow = " ".join([str(i) + "," for i in row])[:-1]
             print(writeRow)
             write_file.write(writeRow.encode())
@@ -45,12 +45,12 @@ def generate_table(dataframe, max_rows=10):
 
 if __name__ == '__main__':
     lazy_sqlite_db_fetch()
-    df = pd.read_csv("./finn_table.csv")
-    app = dash.Dash()
-
-    app.layout = html.Div(children=[
-        html.H4(children='US Agriculture Exports (2011)'),
-        generate_table(df)
-    ])
-
-    app.run_server(debug=True)
+    #df = pd.read_csv("./finn_table.csv")
+    #app = dash.Dash()
+#
+    #app.layout = html.Div(children=[
+    #    html.H4(children='US Agriculture Exports (2011)'),
+    #    generate_table(df)
+    #])
+#
+    #app.run_server(debug=True)

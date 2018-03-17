@@ -29,7 +29,7 @@ class SqlLiteClient:
             sql_db = sqlite3.connect(self.db_path)
             cursor = sql_db.cursor()
             cursor.execute('''CREATE TABLE realestate(id INTEGER PRIMARY KEY, finn_id TEXT,
-                            address TEXT, sq_meter TEXT, price TEXT, price_pr_sqm TEXT)
+                            address TEXT, sq_meter INT, price INT, price_pr_sqm INT)
                          ''')
             sql_db.commit()
 
@@ -64,15 +64,14 @@ class SqlLiteClient:
 if __name__ == "__main__":
 
     path_to_folder = os.path.dirname(__file__)
-    db_path = os.path.join(path_to_folder, 'data', 'finn.db')
+    db_path = os.path.join(path_to_folder, 'data', 'finn_table.db')
 
-    prospect = RealEstate(finn_id='123', address='home2', sq_meters='44', price='1234', price_pr_sqm='2222')
+    prospect = RealEstate(finn_id='123', address='home2', sq_meters=44, price=1234, price_pr_sqm=2222)
 
     sql_client = SqlLiteClient(db_path=db_path)
     # RUN THIS TO MAKE REALESTATE DB
     sql_client.create_table()
-
-    #sql_client.persist_realestate(prospect)
+    sql_client.persist_realestate(prospect)
 
 
     """
